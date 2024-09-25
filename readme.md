@@ -1,5 +1,3 @@
-﻿Das klingt nach einem gut strukturierten Projekt! Hier sind einige Schritte und Tipps, wie du das Projekt in einem Team organisieren und die Module integrieren kannst:
-
 ### 1. Projektstruktur und Aufgabenverteilung
 
 #### Projektstruktur
