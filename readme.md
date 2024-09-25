@@ -1,161 +1,154 @@
-### 1. Projektstruktur und Aufgabenverteilung
+# Bibliothek Schulung Projekt
 
-#### Projektstruktur
-Deine aktuelle Projektstruktur sieht gut aus. Hier ist eine kurze Zusammenfassung:
+Das **Bibliothek Schulung Projekt** ist eine C++-Konsolenanwendung zur Verwaltung von Bibliotheksmedien und Nutzern. Das Programm ermöglicht das Speichern und Laden von Medien und Nutzern in CSV-Dateien sowie die Verwendung einer SQLite-Datenbank für die Speicherung und Verwaltung von Datensätzen.
 
-```
-/bibliothek_project/
-│
-├── /include/
-│   ├── Bibliothek.hpp
-│   ├── Terminal.hpp
-│   ├── Medien.hpp
-│   ├── Buch.hpp
-│   ├── CD.hpp
-│   ├── DVD.hpp
-│   ├── Nutzer.hpp
-│   ├── Regal.hpp
-│   ├── CSVHandler.hpp
-│   ├── Datenbankverbindung.hpp
-│   └── GUI.hpp
-│
-├── /src/
-│   ├── Bibliothek.cpp
-│   ├── Terminal.cpp
-│   ├── Medien.cpp
-│   ├── Buch.cpp
-│   ├── CD.cpp
-│   ├── DVD.cpp
-│   ├── Nutzer.cpp
-│   ├── Regal.cpp
-│   ├── CSVHandler.cpp
-│   └── Datenbankverbindung.cpp
-│
-├── main.cpp
-└── Makefile
-```
+## Inhaltsverzeichnis
 
-#### Aufgabenverteilung
-Teile die Module auf die Teammitglieder auf. Hier sind einige Vorschläge:
+- [Installation](#installation)
+- [Verwendung](#verwendung)
+- [Projektstruktur](#projektstruktur)
+- [Funktionen](#funktionen)
+- [Beispieleingabe](#beispieleingabe)
+- [Technologien](#technologien)
+- [Verbesserungsvorschläge](#verbesserungsvorschläge)
+- [Lizenz](#lizenz)
 
-- **Bibliothek.hpp/cpp**: Verwaltet die Hauptlogik der Bibliothek.
-- **Terminal.hpp/cpp**: Verwaltet die Benutzeroberfläche der Konsole.
-- **Medien.hpp/cpp**: Basisklasse für alle Medien.
-- **Buch.hpp/cpp**: Spezifische Implementierung für Bücher.
-- **CD.hpp/cpp**: Spezifische Implementierung für CDs.
-- **DVD.hpp/cpp**: Spezifische Implementierung für DVDs.
-- **Nutzer.hpp/cpp**: Verwaltet die Nutzerdaten.
-- **Regal.hpp/cpp**: Verwaltet die Regale in der Bibliothek.
-- **CSVHandler.hpp/cpp**: Liest und schreibt CSV-Dateien.
-- **Datenbankverbindung.hpp/cpp**: Verwaltet die Verbindung zur Datenbank.
-- **GUI.hpp/cpp**: Platzhalter für die grafische Benutzeroberfläche.
+## Installation
 
-### 2. Kommunikation und Zusammenarbeit
+### Voraussetzungen
 
-#### Versionierung
-Verwende ein Versionskontrollsystem wie Git, um den Code zu verwalten. Erstelle ein Repository und lade alle Teammitglieder ein.
+- C++ Compiler (z.B. g++, MSVC)
+- [SQLite3](https://www.sqlite.org/download.html) Bibliothek (für Datenbankfunktionalität)
+- [CMake](https://cmake.org/) (optional, für den Build-Prozess)
 
-#### Code-Reviews
-Führe regelmäßige Code-Reviews durch, um sicherzustellen, dass der Code konsistent und fehlerfrei ist.
+### Schritte
 
-#### Meetings
-Halte regelmäßige Meetings ab, um den Fortschritt zu besprechen und Probleme zu lösen.
+1. Klone das Repository auf deinen lokalen Computer:
 
-### 3. Integration der Module
+    ```bash
+    git clone https://github.com/kruemmel-python/Bibliothek_Schulung_Projekt.git
+    ```
 
-#### Header-Dateien
-Stelle sicher, dass alle Header-Dateien korrekt inkludiert werden und dass es keine zirkulären Abhängigkeiten gibt.
+2. Öffne das Projekt in deiner bevorzugten IDE (z.B. Visual Studio).
 
-#### Makefile
-Erstelle ein Makefile, das alle Module kompiliert und verknüpft. Hier ist ein einfaches Beispiel:
+3. Stelle sicher, dass du die **SQLite3**-Bibliothek installiert hast und sie in deinem Projekt korrekt eingebunden ist.
 
-```makefile
-CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic
-INCLUDES = -Iinclude
-SRCS = $(wildcard src/*.cpp)
-OBJS = $(SRCS:.cpp=.o)
-TARGET = bibliothek
+4. Führe das Programm aus.
 
-all: $(TARGET)
+### Optional: Konsolen-Codierung unter Windows auf UTF-8 setzen
 
-$(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $@ $^
-
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
-
-clean:
-	rm -f $(OBJS) $(TARGET)
-
-.PHONY: all clean
-```
-
-### 4. Consolenprogramm und GUI
-
-#### Consolenprogramm
-Beginne mit der Implementierung des Consolenprogramms. Die Klasse `Terminal` kann die Hauptinteraktion mit dem Benutzer verwalten.
-
-#### GUI
-Halte die GUI-Klasse als Platzhalter bereit. Wenn du später eine GUI integrieren möchtest, kannst du eine Bibliothek wie Qt oder SFML verwenden. Stelle sicher, dass die GUI-Klasse die gleichen Funktionen wie die Terminal-Klasse bereitstellt, damit der Übergang reibungslos verläuft.
-
-### 5. Datenbankverbindung
-
-#### Datenbankverbindung
-Implementiere die Datenbankverbindung mit einer Bibliothek wie SQLite oder MySQL. Stelle sicher, dass die Datenbankverbindungsklasse die notwendigen Funktionen bereitstellt, um Daten zu lesen und zu schreiben.
-
-### Beispiel für eine einfache Datenbankverbindungsklasse
+Füge die folgenden Zeilen in **main.cpp** ein, um die Konsolencodierung auf UTF-8 zu ändern und Sonderzeichen korrekt darzustellen:
 
 ```cpp
-// Datenbankverbindung.hpp
-#ifndef DATENBANKVERBINDUNG_HPP
-#define DATENBANKVERBINDUNG_HPP
-
-#include <sqlite3.h>
-#include <string>
-
-class Datenbankverbindung {
-public:
-    Datenbankverbindung(const std::string& dbName);
-    ~Datenbankverbindung();
-
-    bool executeQuery(const std::string& query);
-
-private:
-    sqlite3* db;
-};
-
-#endif // DATENBANKVERBINDUNG_HPP
+#include <windows.h>
+SetConsoleOutputCP(CP_UTF8);
+SetConsoleCP(CP_UTF8);
 ```
 
-```cpp
-// Datenbankverbindung.cpp
-#include "Datenbankverbindung.hpp"
-#include <iostream>
+## Verwendung
 
-Datenbankverbindung::Datenbankverbindung(const std::string& dbName) {
-    if (sqlite3_open(dbName.c_str(), &db) != SQLITE_OK) {
-        std::cerr << "Cannot open database: " << sqlite3_errmsg(db) << std::endl;
-        db = nullptr;
-    }
-}
+Nach dem Start des Programms wird das Bibliotheksterminal angezeigt. Hier sind die verfügbaren Aktionen:
 
-Datenbankverbindung::~Datenbankverbindung() {
-    if (db) {
-        sqlite3_close(db);
-    }
-}
-
-bool Datenbankverbindung::executeQuery(const std::string& query) {
-    char* errMsg = nullptr;
-    if (sqlite3_exec(db, query.c_str(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
-        std::cerr << "SQL error: " << errMsg << std::endl;
-        sqlite3_free(errMsg);
-        return false;
-    }
-    return true;
-}
+```plaintext
+Bibliothek-Terminal
+1. Medien auflisten
+2. Nutzer auflisten
+3. Medien aus CSV laden
+4. Nutzer aus CSV laden
+5. Medium hinzufügen
+6. Nutzer hinzufügen
+7. Beenden
 ```
 
-### Fazit
-Mit einer klaren Struktur, guter Kommunikation und regelmäßigen Code-Reviews kannst du sicherstellen, dass das Projekt erfolgreich ist. Viel Erfolg bei der Umsetzung!
+### Beispielaktionen:
+
+- **Medien auflisten**: Zeigt alle gespeicherten Medien (Bücher, CDs, DVDs) an.
+- **Nutzer auflisten**: Zeigt alle registrierten Nutzer der Bibliothek an.
+- **Medien/Nutzer aus CSV laden**: Lädt Daten aus den CSV-Dateien `bibliothek.csv` und `nutzer.csv`.
+- **Medium/Nutzer hinzufügen**: Fügt neue Medien oder Nutzer zur Bibliothek hinzu, speichert sie in CSV-Dateien und optional in die Datenbank.
+- **Beenden**: Beendet das Programm.
+
+## Projektstruktur
+
+```plaintext
+.
+├── Bibliothek.cpp             # Implementierung der Bibliothekslogik
+├── Bibliothek.hpp             # Header für Bibliothek-Klasse
+├── Terminal.cpp               # Implementierung des Terminal-Menüs
+├── Terminal.hpp               # Header für Terminal-Klasse
+├── CSVHandler.cpp             # Implementierung für das Lesen und Schreiben von CSV-Dateien
+├── CSVHandler.hpp             # Header für CSV-Handling
+├── Datenbankverbindung.cpp    # Implementierung der SQLite-Datenbankanbindung
+├── Datenbankverbindung.hpp    # Header für SQLite-Datenbankanbindung
+├── Medien.cpp                 # Implementierung der Medienlogik (Buch, CD, DVD)
+├── Medien.hpp                 # Header für Medien
+├── Nutzer.cpp                 # Implementierung der Nutzerlogik
+├── Nutzer.hpp                 # Header für Nutzer
+├── Regal.hpp                  # Header für Regal-Klasse
+├── main.cpp                   # Haupt-Einstiegspunkt für das Programm
+├── bibliothek.csv             # CSV-Datei für Medien
+├── nutzer.csv                 # CSV-Datei für Nutzer
+├── bibliothek.db              # SQLite-Datenbankdatei für Medien und Nutzer (optional)
+└── README.md                  # Diese README-Datei
+```
+
+## Funktionen
+
+1. **CSV-Handling**:
+   - Medien und Nutzerdaten werden in den Dateien `bibliothek.csv` und `nutzer.csv` gespeichert und können von dort geladen werden.
+
+2. **Datenbankunterstützung**:
+   - Daten werden optional auch in einer SQLite-Datenbank (`bibliothek.db`) gespeichert, um eine persistente Speicherung und spätere Abfragen zu ermöglichen.
+
+3. **Modulares Design**:
+   - Die Anwendung ist modular aufgebaut, sodass neue Medientypen oder Funktionen einfach hinzugefügt werden können.
+
+## Beispieleingabe
+
+Beim Hinzufügen eines Mediums fragt das Programm nach den folgenden Informationen:
+
+```plaintext
+Medientyp (Buch/CD/DVD): Buch
+Autor: Max Mustermann
+Titel: C++ für Einsteiger
+Kategorie: Programmierung
+Code: 978-3-16-148410-0
+```
+
+Beim Hinzufügen eines Nutzers wird folgendes abgefragt:
+
+```plaintext
+Vorname: Maria
+Nachname: Müller
+Strasse: Hauptstr.
+Hausnummer: 12
+PLZ: 12345
+Ort: Berlin
+Email: maria.mueller@example.com
+Telefonnummer: +49(0)1234 56789
+Mitgliedsnummer: MGN12345
+```
+
+## Technologien
+
+- **C++**: Hauptprogrammiersprache
+- **SQLite**: Für die Datenbankintegration
+- **CSV**: Zum Speichern und Laden von Daten
+- **Visual Studio** oder **CMake**: Zum Verwalten und Bauen des Projekts
+
+## Verbesserungsvorschläge
+
+- **Grafische Benutzeroberfläche (GUI)**: Eine zukünftige Version könnte eine GUI anstelle der Konsolenausgabe verwenden.
+- **Erweiterte Fehlerbehandlung**: Bessere Fehlerbehandlung bei ungültigen Eingaben und CSV-Daten.
+- **Tests**: Implementierung von Unit-Tests zur Verbesserung der Codequalität.
+
+## Lizenz
+
+Dieses Projekt steht unter der MIT-Lizenz. Siehe die [LICENSE](LICENSE)-Datei für weitere Details.
+```
+
+### Hinweise:
+- **Installation**: Ich habe Schritte hinzugefügt, um sicherzustellen, dass SQLite korrekt eingebunden wird. Falls es zusätzliche Abhängigkeiten gibt, kannst du sie dort erwähnen.
+- **Projektstruktur**: Ich habe die genaue Struktur basierend auf deiner Dateiliste eingebaut, damit Nutzer leicht verstehen, wie die Dateien organisiert sind.
+- **Verbesserungsvorschläge**: Falls du weitere Ideen hast, kannst du diesen Abschnitt erweitern.
+
