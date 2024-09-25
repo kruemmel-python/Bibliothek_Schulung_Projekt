@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.35230.93
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bibliothek_Schulung", "Bibliothek_Schulung\Bibliothek_Schulung.vcxproj", "{17FD74DF-4624-476F-A824-0A148C3CD08F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Projektmappenelemente", "{4617FDEB-3B74-417D-AF54-EB4FA115D707}"
+	ProjectSection(SolutionItems) = preProject
+		MAKEFILE = MAKEFILE
+		readme.md = readme.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{17FD74DF-4624-476F-A824-0A148C3CD08F}.Debug|x64.ActiveCfg = Debug|x64
+		{17FD74DF-4624-476F-A824-0A148C3CD08F}.Debug|x64.Build.0 = Debug|x64
+		{17FD74DF-4624-476F-A824-0A148C3CD08F}.Debug|x86.ActiveCfg = Debug|Win32
+		{17FD74DF-4624-476F-A824-0A148C3CD08F}.Debug|x86.Build.0 = Debug|Win32
+		{17FD74DF-4624-476F-A824-0A148C3CD08F}.Release|x64.ActiveCfg = Release|x64
+		{17FD74DF-4624-476F-A824-0A148C3CD08F}.Release|x64.Build.0 = Release|x64
+		{17FD74DF-4624-476F-A824-0A148C3CD08F}.Release|x86.ActiveCfg = Release|Win32
+		{17FD74DF-4624-476F-A824-0A148C3CD08F}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7510FB5A-B9A0-41F9-935D-F095AED879F5}
+	EndGlobalSection
+EndGlobal
