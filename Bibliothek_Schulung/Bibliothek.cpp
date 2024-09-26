@@ -11,11 +11,12 @@
 #include "Datenbankverbindung.hpp"
 #include <stdexcept>
 
+using namespace std;  // Du kannst hier `using namespace std;` verwenden
 
 // Konstruktor, initialisiert die Verbindung zur Datenbank
-Bibliothek::Bibliothek(const std::string& dbName) : db(dbName) {
+Bibliothek::Bibliothek(const string& dbName) : db(dbName) {
     if (!db.isConnected()) {
-        throw std::runtime_error("Fehler: Keine Verbindung zur Datenbank.");
+        throw runtime_error("Fehler: Keine Verbindung zur Datenbank.");
     }
 }
 
@@ -25,25 +26,25 @@ void Bibliothek::ladeMedienAusCSV() {
     for (const auto& row : data) {
         if (row.size() < 7) continue; // Mindestens 7 Spalten erwartet
 
-        std::string typ = row[0];
-        std::string autor = row[1];
-        std::string titel = row[2];
-        std::string kategorie = row[4];
-        std::string code = row[5];
+        string typ = row[0];
+        string autor = row[1];
+        string titel = row[2];
+        string kategorie = row[4];
+        string code = row[5];
 
         if (code.empty()) {
-            std::cerr << "Fehler: Medientyp " << typ << " hat keinen Code." << std::endl;
+            cerr << "Fehler: Medientyp " << typ << " hat keinen Code." << endl;
             continue;
         }
 
         if (typ == "Buch") {
-            medien.push_back(std::make_shared<Buch>(autor, titel, kategorie, code));
+            medien.push_back(make_shared<Buch>(autor, titel, kategorie, code));
         }
         else if (typ == "CD") {
-            medien.push_back(std::make_shared<CD>(autor, titel, kategorie, code));
+            medien.push_back(make_shared<CD>(autor, titel, kategorie, code));
         }
         else if (typ == "DVD") {
-            medien.push_back(std::make_shared<DVD>(autor, titel, kategorie, code));
+            medien.push_back(make_shared<DVD>(autor, titel, kategorie, code));
         }
     }
 }
@@ -52,7 +53,6 @@ void Bibliothek::ladeMedienAusCSV() {
 void Bibliothek::ladeNutzerAusCSV() {
     auto data = CSVHandler::readCSV(nutzerCSV);
 
-    // Überprüfe, ob die erste Zeile die Spaltenüberschriften sind und überspringe diese
     bool ersteZeileIstUeberschrift = true;  // Falls die erste Zeile Überschriften enthält
     for (const auto& row : data) {
         if (ersteZeileIstUeberschrift) {
@@ -62,28 +62,26 @@ void Bibliothek::ladeNutzerAusCSV() {
 
         if (row.size() < 9) continue; // Mindestens 9 Spalten erwartet
 
-        std::string vorname = row[0];
-        std::string nachname = row[1];
-        std::string strasse = row[2];
+        string vorname = row[0];
+        string nachname = row[1];
+        string strasse = row[2];
         int hausnummer = 0;
-        std::string plz = row[4];
-        std::string ort = row[5];
-        std::string email = row[6];
-        std::string telefonnummer = row[7];
-        std::string mitgliedsnummer = row[8];
+        string plz = row[4];
+        string ort = row[5];
+        string email = row[6];
+        string telefonnummer = row[7];
+        string mitgliedsnummer = row[8];
 
         // Fehlerbehandlung für ungültige Hausnummer
         try {
-            hausnummer = std::stoi(row[3]); // Versuche, die Hausnummer zu konvertieren
+            hausnummer = stoi(row[3]); // Versuche, die Hausnummer zu konvertieren
         }
-        catch (const std::invalid_argument& e) {
-            std::cerr << "Ungültige Hausnummer für Nutzer mit Mitgliedsnummer: "
-                << mitgliedsnummer << std::endl;
+        catch (const invalid_argument& e) {
+            cerr << "Ungültige Hausnummer für Nutzer mit Mitgliedsnummer: " << mitgliedsnummer << endl;
             continue;
         }
-        catch (const std::out_of_range& e) {
-            std::cerr << "Hausnummer außerhalb des Bereichs für Nutzer mit Mitgliedsnummer: "
-                << mitgliedsnummer << std::endl;
+        catch (const out_of_range& e) {
+            cerr << "Hausnummer außerhalb des Bereichs für Nutzer mit Mitgliedsnummer: " << mitgliedsnummer << endl;
             continue;
         }
 
@@ -94,7 +92,7 @@ void Bibliothek::ladeNutzerAusCSV() {
 
 // Medien in die CSV-Datei speichern
 void Bibliothek::speichereMedienInCSV() {
-    std::vector<std::vector<std::string>> data;
+    vector<vector<string>> data;
     for (const auto& m : medien) {
         data.push_back({ m->getTyp(), m->getAutor(), m->getTitel(), "", m->getKategorie(), m->getCode(), "", "" });
     }
@@ -103,9 +101,9 @@ void Bibliothek::speichereMedienInCSV() {
 
 // Nutzer in die CSV-Datei speichern
 void Bibliothek::speichereNutzerInCSV() {
-    std::vector<std::vector<std::string>> data;
+    vector<vector<string>> data;
     for (const auto& n : nutzer) {
-        data.push_back({ n.getVorname(), n.getNachname(), n.getStrasse(), std::to_string(n.getHausnummer()),
+        data.push_back({ n.getVorname(), n.getNachname(), n.getStrasse(), to_string(n.getHausnummer()),
                         n.getPLZ(), n.getOrt(), n.getEmail(), n.getTelefonnummer(), n.getMitgliedsnummer() });
     }
     CSVHandler::writeCSV(nutzerCSV, data);
@@ -114,18 +112,18 @@ void Bibliothek::speichereNutzerInCSV() {
 // Medien in die Datenbank speichern
 void Bibliothek::speichereMedienInDatenbank() {
     if (!db.isConnected()) {
-        std::cerr << "Fehler: Keine Verbindung zur Datenbank." << std::endl;
+        cerr << "Fehler: Keine Verbindung zur Datenbank." << endl;
         return;
     }
     for (const auto& m : medien) {
-        std::string query = "INSERT INTO Medien (Typ, Autor, Titel, Kategorie, Code) VALUES ('" +
+        string query = "INSERT INTO Medien (Typ, Autor, Titel, Kategorie, Code) VALUES ('" +
             m->getTyp() + "', '" + m->getAutor() + "', '" + m->getTitel() + "', '" +
             m->getKategorie() + "', '" + m->getCode() + "');";
         try {
             db.executeQuery(query);
         }
-        catch (const std::exception&) {
-            std::cerr << "Fehler beim Speichern des Mediums in die Datenbank." << std::endl;
+        catch (const exception&) {
+            cerr << "Fehler beim Speichern des Mediums in die Datenbank." << endl;
         }
     }
 }
@@ -133,44 +131,44 @@ void Bibliothek::speichereMedienInDatenbank() {
 // Nutzer in die Datenbank speichern
 void Bibliothek::speichereNutzerInDatenbank() {
     if (!db.isConnected()) {
-        std::cerr << "Fehler: Keine Verbindung zur Datenbank." << std::endl;
+        cerr << "Fehler: Keine Verbindung zur Datenbank." << endl;
         return;
     }
     for (const auto& n : nutzer) {
-        std::string query = "INSERT INTO Nutzer (Vorname, Nachname, Strasse, Hausnummer, PLZ, Ort, Email, Telefonnummer, Mitgliedsnummer) VALUES ('" +
+        string query = "INSERT INTO Nutzer (Vorname, Nachname, Strasse, Hausnummer, PLZ, Ort, Email, Telefonnummer, Mitgliedsnummer) VALUES ('" +
             n.getVorname() + "', '" + n.getNachname() + "', '" + n.getStrasse() + "', " +
-            std::to_string(n.getHausnummer()) + ", '" + n.getPLZ() + "', '" + n.getOrt() + "', '" +
+            to_string(n.getHausnummer()) + ", '" + n.getPLZ() + "', '" + n.getOrt() + "', '" +
             n.getEmail() + "', '" + n.getTelefonnummer() + "', '" + n.getMitgliedsnummer() + "');";
         try {
             db.executeQuery(query);
         }
-        catch (const std::exception&) {
-            std::cerr << "Fehler beim Speichern des Nutzers in die Datenbank." << std::endl;
+        catch (const exception&) {
+            cerr << "Fehler beim Speichern des Nutzers in die Datenbank." << endl;
         }
     }
 }
 
 // Medien in der Konsole auflisten (mit verbesserter Formatierung)
 void Bibliothek::listeMedien() const {
-    std::cout << "Liste der Medien:" << std::endl;
-    std::cout << "-----------------" << std::endl;
+    cout << "Liste der Medien:" << endl;
+    cout << "-----------------" << endl;
     for (const auto& m : medien) {
-        std::cout << "Typ: " << m->getTyp()
+        cout << "Typ: " << m->getTyp()
             << " | Autor: " << m->getAutor()
             << " | Titel: " << m->getTitel()
             << " | Kategorie: " << m->getKategorie()
             << " | Code: " << m->getCode()
-            << std::endl;
+            << endl;
     }
-    std::cout << "-----------------" << std::endl;
+    cout << "-----------------" << endl;
 }
 
 // Nutzer in der Konsole auflisten (mit verbesserter Formatierung)
 void Bibliothek::listeNutzer() const {
-    std::cout << "Liste der Nutzer:" << std::endl;
-    std::cout << "-----------------" << std::endl;
+    cout << "Liste der Nutzer:" << endl;
+    cout << "-----------------" << endl;
     for (const auto& n : nutzer) {
-        std::cout << "Vorname: " << n.getVorname()
+        cout << "Vorname: " << n.getVorname()
             << " | Nachname: " << n.getNachname()
             << " | Strasse: " << n.getStrasse()
             << " | Hausnummer: " << n.getHausnummer()
@@ -179,64 +177,64 @@ void Bibliothek::listeNutzer() const {
             << " | Email: " << n.getEmail()
             << " | Telefonnummer: " << n.getTelefonnummer()
             << " | Mitgliedsnummer: " << n.getMitgliedsnummer()
-            << std::endl;
+            << endl;
     }
-    std::cout << "-----------------" << std::endl;
+    cout << "-----------------" << endl;
 }
 
 // Neue Methode: Medium hinzufügen
-void Bibliothek::fuegeMediumHinzu(const std::string& typ, const std::string& autor, const std::string& titel, const std::string& kategorie, const std::string& code) {
+void Bibliothek::fuegeMediumHinzu(const string& typ, const string& autor, const string& titel, const string& kategorie, const string& code) {
     // Medium zur internen Liste hinzufügen
     if (typ == "Buch") {
-        medien.push_back(std::make_shared<Buch>(autor, titel, kategorie, code));
+        medien.push_back(make_shared<Buch>(autor, titel, kategorie, code));
     }
     else if (typ == "CD") {
-        medien.push_back(std::make_shared<CD>(autor, titel, kategorie, code));
+        medien.push_back(make_shared<CD>(autor, titel, kategorie, code));
     }
     else if (typ == "DVD") {
-        medien.push_back(std::make_shared<DVD>(autor, titel, kategorie, code));
+        medien.push_back(make_shared<DVD>(autor, titel, kategorie, code));
     }
 
     // Medium zur CSV-Datei hinzufügen
-    std::vector<std::vector<std::string>> data = {
+    vector<vector<string>> data = {
         { typ, autor, titel, "", kategorie, code, "", "" }
     };
     CSVHandler::writeCSVAppend(medienCSV, data);
 
     // Medium in die Datenbank speichern, falls vorhanden
     if (db.isConnected()) {
-        std::string query = "INSERT INTO Medien (Typ, Autor, Titel, Kategorie, Code) VALUES ('" +
+        string query = "INSERT INTO Medien (Typ, Autor, Titel, Kategorie, Code) VALUES ('" +
             typ + "', '" + autor + "', '" + titel + "', '" + kategorie + "', '" + code + "');";
         try {
             db.executeQuery(query);
         }
-        catch (const std::exception& e) {
-            std::cerr << "Fehler beim Hinzufügen des Mediums zur Datenbank: " << e.what() << std::endl;
+        catch (const exception& e) {
+            cerr << "Fehler beim Hinzufügen des Mediums zur Datenbank: " << e.what() << endl;
         }
     }
 }
 
 // Neue Methode: Nutzer hinzufügen
-void Bibliothek::fuegeNutzerHinzu(const std::string& vorname, const std::string& nachname, const std::string& strasse, int hausnummer, const std::string& plz, const std::string& ort, const std::string& email, const std::string& telefonnummer, const std::string& mitgliedsnummer) {
+void Bibliothek::fuegeNutzerHinzu(const string& vorname, const string& nachname, const string& strasse, int hausnummer, const string& plz, const string& ort, const string& email, const string& telefonnummer, const string& mitgliedsnummer) {
     // Nutzer zur internen Liste hinzufügen
     nutzer.emplace_back(vorname, nachname, strasse, hausnummer, plz, ort, email, telefonnummer, mitgliedsnummer);
 
     // Nutzer zur CSV-Datei hinzufügen
-    std::vector<std::vector<std::string>> data = {
-        { vorname, nachname, strasse, std::to_string(hausnummer), plz, ort, email, telefonnummer, mitgliedsnummer }
+    vector<vector<string>> data = {
+        { vorname, nachname, strasse, to_string(hausnummer), plz, ort, email, telefonnummer, mitgliedsnummer }
     };
     CSVHandler::writeCSVAppend(nutzerCSV, data);
 
     // Nutzer in die Datenbank speichern, falls vorhanden
     if (db.isConnected()) {
-        std::string query = "INSERT INTO Nutzer (Vorname, Nachname, Strasse, Hausnummer, PLZ, Ort, Email, Telefonnummer, Mitgliedsnummer) VALUES ('" +
-            vorname + "', '" + nachname + "', '" + strasse + "', " + std::to_string(hausnummer) + ", '" + plz + "', '" + ort + "', '" +
+        string query = "INSERT INTO Nutzer (Vorname, Nachname, Strasse, Hausnummer, PLZ, Ort, Email, Telefonnummer, Mitgliedsnummer) VALUES ('" +
+            vorname + "', '" + nachname + "', '" + strasse + "', " + to_string(hausnummer) + ", '" + plz + "', '" + ort + "', '" +
             email + "', '" + telefonnummer + "', '" + mitgliedsnummer + "');";
         try {
             db.executeQuery(query);
         }
-        catch (const std::exception& e) {
-            std::cerr << "Fehler beim Hinzufügen des Nutzers zur Datenbank: " << e.what() << std::endl;
+        catch (const exception& e) {
+            cerr << "Fehler beim Hinzufügen des Nutzers zur Datenbank: " << e.what() << endl;
         }
     }
 }
