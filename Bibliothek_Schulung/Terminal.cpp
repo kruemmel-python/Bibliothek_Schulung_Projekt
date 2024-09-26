@@ -1,28 +1,29 @@
 #include "Terminal.hpp"
 #include <iostream>
 
+using namespace std;
+
 Terminal::Terminal(Bibliothek& bibliothek) : bibliothek(bibliothek) {}
 
 void Terminal::start() {
     int auswahl = 0;
     while (auswahl != 7) {  // Menüpunkte bis 7
         zeigeMenue();
-        std::cin >> auswahl;
+        cin >> auswahl;
         verarbeiteEingabe(auswahl);
     }
 }
 
 void Terminal::zeigeMenue() const {
-    
-    std::cout << "Bibliothek-Terminal" << std::endl;
-    std::cout << "1. Medien auflisten" << std::endl;
-    std::cout << "2. Nutzer auflisten" << std::endl;
-    std::cout << "3. Medien aus CSV laden" << std::endl;
-    std::cout << "4. Nutzer aus CSV laden" << std::endl;
-    std::cout << "5. Medium hinzufügen" << std::endl;  // Neuer Menüpunkt
-    std::cout << "6. Nutzer hinzufügen" << std::endl;  // Neuer Menüpunkt
-    std::cout << "7. Beenden" << std::endl;
-    std::cout << "Auswahl: ";
+    cout << "Bibliothek-Terminal" << endl;
+    cout << "1. Medien auflisten" << endl;
+    cout << "2. Nutzer auflisten" << endl;
+    cout << "3. Medien aus CSV laden" << endl;
+    cout << "4. Nutzer aus CSV laden" << endl;
+    cout << "5. Medium hinzufügen" << endl;  // Neuer Menüpunkt
+    cout << "6. Nutzer hinzufügen" << endl;  // Neuer Menüpunkt
+    cout << "7. Beenden" << endl;
+    cout << "Auswahl: ";
 }
 
 void Terminal::verarbeiteEingabe(int auswahl) {
@@ -46,50 +47,50 @@ void Terminal::verarbeiteEingabe(int auswahl) {
         nutzerHinzufuegen();  // Nutzer hinzufügen
         break;
     case 7:
-        std::cout << "Beenden..." << std::endl;
+        cout << "Beenden..." << endl;
         break;
     default:
-        std::cout << "Ungültige Auswahl. Bitte erneut versuchen." << std::endl;
+        cout << "Ungültige Auswahl. Bitte erneut versuchen." << endl;
     }
 }
 
 void Terminal::mediumHinzufuegen() {
-    std::string typ, autor, titel, kategorie, code;
-    std::cout << "Medientyp (Buch/CD/DVD): ";
-    std::cin >> typ;
-    std::cout << "Autor: ";
-    std::cin >> autor;
-    std::cout << "Titel: ";
-    std::cin >> titel;
-    std::cout << "Kategorie: ";
-    std::cin >> kategorie;
-    std::cout << "Code: ";
-    std::cin >> code;
+    string typ, autor, titel, kategorie, code;
+    cout << "Medientyp (Buch/CD/DVD): ";
+    cin >> typ;
+    cout << "Autor: ";
+    cin >> autor;
+    cout << "Titel: ";
+    cin >> titel;
+    cout << "Kategorie: ";
+    cin >> kategorie;
+    cout << "Code: ";
+    cin >> code;
 
     bibliothek.fuegeMediumHinzu(typ, autor, titel, kategorie, code);
 }
 
 void Terminal::nutzerHinzufuegen() {
-    std::string vorname, nachname, strasse, plz, ort, email, telefonnummer, mitgliedsnummer;
+    string vorname, nachname, strasse, plz, ort, email, telefonnummer, mitgliedsnummer;
     int hausnummer;
-    std::cout << "Vorname: ";
-    std::cin >> vorname;
-    std::cout << "Nachname: ";
-    std::cin >> nachname;
-    std::cout << "Strasse: ";
-    std::cin >> strasse;
-    std::cout << "Hausnummer: ";
-    std::cin >> hausnummer;
-    std::cout << "PLZ: ";
-    std::cin >> plz;
-    std::cout << "Ort: ";
-    std::cin >> ort;
-    std::cout << "Email: ";
-    std::cin >> email;
-    std::cout << "Telefonnummer: ";
-    std::cin >> telefonnummer;
-    std::cout << "Mitgliedsnummer: ";
-    std::cin >> mitgliedsnummer;
+    cout << "Vorname: ";
+    cin >> vorname;
+    cout << "Nachname: ";
+    cin >> nachname;
+    cout << "Strasse: ";
+    cin >> strasse;
+    cout << "Hausnummer: ";
+    cin >> hausnummer;
+    cout << "PLZ: ";
+    cin >> plz;
+    cout << "Ort: ";
+    cin >> ort;
+    cout << "Email: ";
+    cin >> email;
+    cout << "Telefonnummer: ";
+    cin >> telefonnummer;
+    cout << "Mitgliedsnummer: ";
+    cin >> mitgliedsnummer;
 
     bibliothek.fuegeNutzerHinzu(vorname, nachname, strasse, hausnummer, plz, ort, email, telefonnummer, mitgliedsnummer);
 }
