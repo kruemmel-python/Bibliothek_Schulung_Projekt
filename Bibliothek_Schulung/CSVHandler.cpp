@@ -1,17 +1,24 @@
 #include "CSVHandler.hpp"
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
 // CSV-Datei lesen
-std::vector<std::vector<std::string>> CSVHandler::readCSV(const std::string& filename) {
-    std::vector<std::vector<std::string>> data;
-    std::ifstream file(filename);
-    std::string line;
+vector<vector<string>> CSVHandler::readCSV(const string& filename) {
+    vector<vector<string>> data;
+    ifstream file(filename);
+    string line;
 
-    while (std::getline(file, line)) {
-        std::stringstream lineStream(line);
-        std::string cell;
-        std::vector<std::string> row;
+    while (getline(file, line)) {
+        stringstream lineStream(line);
+        string cell;
+        vector<string> row;
 
-        while (std::getline(lineStream, cell, ',')) {
+        while (getline(lineStream, cell, ',')) {
             row.push_back(cell);
         }
 
@@ -22,8 +29,8 @@ std::vector<std::vector<std::string>> CSVHandler::readCSV(const std::string& fil
 }
 
 // CSV-Datei überschreiben
-void CSVHandler::writeCSV(const std::string& filename, const std::vector<std::vector<std::string>>& data) {
-    std::ofstream file(filename);
+void CSVHandler::writeCSV(const string& filename, const vector<vector<string>>& data) {
+    ofstream file(filename);
 
     for (const auto& row : data) {
         for (size_t i = 0; i < row.size(); ++i) {
@@ -37,11 +44,11 @@ void CSVHandler::writeCSV(const std::string& filename, const std::vector<std::ve
 }
 
 // CSV-Datei anhängen
-void CSVHandler::writeCSVAppend(const std::string& filename, const std::vector<std::vector<std::string>>& data) {
-    std::ofstream file(filename, std::ios::app);  // Datei im Anhängemodus öffnen
+void CSVHandler::writeCSVAppend(const string& filename, const vector<vector<string>>& data) {
+    ofstream file(filename, ios::app);  // Datei im Anhängemodus öffnen
 
     if (!file.is_open()) {
-        std::cerr << "Fehler beim Öffnen der Datei zum Anhängen: " << filename << std::endl;
+        cerr << "Fehler beim Öffnen der Datei zum Anhängen: " << filename << endl;
         return;
     }
 
