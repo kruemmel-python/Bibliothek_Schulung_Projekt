@@ -9,10 +9,13 @@
 class Regal {
 public:
     Regal(const std::string& name, int capacity);
-    
+
     bool addMedium(std::shared_ptr<Medien> medium);
     bool removeMedium(const std::string& title);
     void displayInhalte() const;
+
+    // Methode, um nur Bücher im Regal anzuzeigen
+    void displayBooks() const;
 
     const std::string& getName() const;
 

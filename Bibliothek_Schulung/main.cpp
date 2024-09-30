@@ -3,12 +3,26 @@
 #include "Terminal.hpp"
 #include "GUI.hpp"
 #include <iostream>
+#include <wx/wx.h>
+
+// Definiere die App-Klasse für wxWidgets
+class MyApp : public wxApp {
+public:
+    virtual bool OnInit();
+};
+
+wxIMPLEMENT_APP(MyApp);
+
+bool MyApp::OnInit() {
+    MyFrame* frame = new MyFrame("Leere Bibliothek GUI"); // Leeres GUI-Frame
+    frame->Show(true);
+    return true;
+}
 
 int main(int argc, char** argv) {
     // Setze die Konsolen-Codierung auf UTF-8 für die Ausgabe und Eingabe
     SetConsoleOutputCP(CP_UTF8);  // Setzt die Konsolen-Ausgabe auf UTF-8
     SetConsoleCP(CP_UTF8);        // Setzt die Konsolen-Eingabe auf UTF-8
-    // wxWidgets-Anwendung starten
 
     int auswahl = 0;
     std::cout << "Wählen Sie den Modus:\n";
@@ -25,19 +39,8 @@ int main(int argc, char** argv) {
         terminal.start();
     }
     else if (auswahl == 2) {
-        // wxWidgets GUI starten
-        wxDISABLE_DEBUG_SUPPORT();  // wxWidgets spezifisch für Debug-Builds
-
-        if (!wxEntryStart(argc, argv)) {
-            return -1;  // Fehler beim Starten von wxWidgets
-        }
-
-        // Event-Schleife starten
-        wxTheApp->CallOnInit();
-        wxTheApp->OnRun();
-
-        // wxWidgets aufräumen
-        wxEntryCleanup();
+        // GUI wird über wxWidgets-Framework automatisch gestartet
+        return wxEntry(argc, argv);  // wxWidgets Anwendung starten
     }
     else {
         std::cout << "Ungültige Auswahl. Programm wird beendet." << std::endl;

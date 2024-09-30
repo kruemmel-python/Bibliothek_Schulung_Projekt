@@ -13,8 +13,14 @@ private:
     void zeigeMenue() const;
     void verarbeiteEingabe(int auswahl);
 
-    void mediumHinzufuegen();  // Funktion zum Hinzufügen eines Mediums
-    void nutzerHinzufuegen();  // Funktion zum Hinzufügen eines Nutzers
+    // Funktionen zum Hinzufügen, Entfernen und Suchen
+    void mediumHinzufuegen();
+    void nutzerHinzufuegen();
+    void mediumEntfernen();
+    void nutzerEntfernen();
+    void sucheMedien();
+    void sucheNutzer();
+    void sucheRegal();  // Neu: Regal suchen und Bücher anzeigen
 
     Bibliothek& bibliothek;
 };

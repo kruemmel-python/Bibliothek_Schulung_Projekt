@@ -143,6 +143,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Medien.cpp" />
     <ClCompile Include="Nutzer.cpp" />
+    <ClCompile Include="Regal.cpp" />
     <ClCompile Include="Terminal.cpp" />
   </ItemGroup>
   <ItemGroup>

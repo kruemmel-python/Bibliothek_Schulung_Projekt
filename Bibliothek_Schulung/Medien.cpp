@@ -1,22 +1,24 @@
 #include "Medien.hpp"
 
-using namespace std;
+Medien::Medien(const std::string& autor, const std::string& titel, const std::string& kategorie, const std::string& code, const std::string& regal)
+    : autor(autor), titel(titel), kategorie(kategorie), code(code), regal(regal) {} // Initialisiere das Regal
 
-Medien::Medien(const string& autor, const string& titel, const string& kategorie, const string& code)
-    : autor(autor), titel(titel), kategorie(kategorie), code(code) {}
-
-string Medien::getAutor() const {
+std::string Medien::getAutor() const {
     return autor;
 }
 
-string Medien::getTitel() const {
+std::string Medien::getTitel() const {
     return titel;
 }
 
-string Medien::getKategorie() const {
+std::string Medien::getKategorie() const {
     return kategorie;
 }
 
-string Medien::getCode() const {
+std::string Medien::getCode() const {
     return code;
+}
+
+std::string Medien::getRegal() const {
+    return regal; // Füge Methode zum Abrufen des Regals hinzu
 }
