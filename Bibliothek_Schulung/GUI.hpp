@@ -1,10 +1,21 @@
 #ifndef GUI_HPP
 #define GUI_HPP
 
-class GUI {
+#include <wx/wx.h>
+
+class GUI : public wxApp {
 public:
-    GUI();
-    void init();  // Leere Initialisierung für spätere GUI-Integration
+    virtual bool OnInit();  // wxWidgets Initialisierung
 };
+
+class MyFrame : public wxFrame {
+public:
+    MyFrame(const wxString& title);
+
+private:
+    void OnButtonClick(wxCommandEvent& event);  // Event-Handler für den Button
+};
+
+
 
 #endif
