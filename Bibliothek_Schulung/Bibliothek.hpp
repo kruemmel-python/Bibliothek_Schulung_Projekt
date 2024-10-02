@@ -1,3 +1,5 @@
+// Bibliothek.hpp
+
 #ifndef BIBLIOTHEK_HPP
 #define BIBLIOTHEK_HPP
 
@@ -16,6 +18,9 @@ public:
 
     // Neue Methode zur Anzeige von Büchern in einem Regal
     void zeigeBuecherInRegal(const std::string& regName) const;
+
+    // **Füge diese Zeile hinzu:**
+    void zeigeMedienInRegal(const std::string& regName) const;
 
     std::vector<std::shared_ptr<Medien>> sucheMedien(const std::string& suchbegriff, const std::string& kriterium) const;
     std::vector<Nutzer> sucheNutzer(const std::string& suchbegriff, const std::string& kriterium) const;

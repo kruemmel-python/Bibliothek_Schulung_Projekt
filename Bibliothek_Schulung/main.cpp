@@ -14,7 +14,8 @@ public:
 wxIMPLEMENT_APP(MyApp);
 
 bool MyApp::OnInit() {
-    MyFrame* frame = new MyFrame("Leere Bibliothek GUI"); // Leeres GUI-Frame
+    Bibliothek bibliothek("bibliothek.db"); // Bibliothek-Objekt erstellen
+    MyFrame* frame = new MyFrame("Bibliothek Management", bibliothek); // Bibliothek an Frame übergeben
     frame->Show(true);
     return true;
 }
